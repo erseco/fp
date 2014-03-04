@@ -4,7 +4,14 @@
 
 	2013 - Ernesto Serrano Collado
 	------------------------------
-	
+	Realizar un programa que lea del teclado un número indeterminado de datos 
+	de tipo Punto2D de manera que termine la lectura si el usuario escribe -1 
+	cuando el progra- ma le pide la abscisa de un nuevo punto. Los puntos 
+	leídos los almacena en un objeto ColeccionPuntos2D.
+
+	A continuación pide los datos necesarios, y crea un objeto Circunferencia, 
+	y finalmente muestra cuáles de los puntos almacenados en la colección 
+	ColeccionPuntos2D está en el círculo delimitado por la circunferencia.
 
 ******************************************************************************/
 #include <iostream>	//Inclusión de los recursos de E/S
@@ -141,37 +148,26 @@ int main() {
 	do {
 		
 		//Obtenemos los datos necesarios
-		cout << "Introduzca la abscisa: ";
+		cout << "Introduzca la abscisa (entero positivo -1 para salir): ";
 		cin >> abscisa;
 
-		if (abscisa < -1) {
+		//Comprobamos que no haya metido un -1 (salir)
+		if (abscisa != -1) {
 
-			cout << "La abscisa debe ser positiva, intentelo de nuevo\n";
-
-		} else if (abscisa > 0) { 
-
-			cout << "Introduzca la ordenada: ";
+			cout << "Introduzca la ordenada (entero positivo): ";
 			cin >> ordenada;
-
-			if (ordenada < 0) {
 		
-				cout << "La ordenada debe ser positiva, intentelo de nuevo\n";
-				
-			} else {
-		
-				//Creamos un nuevo punto
-				Punto2D punto(abscisa, ordenada);
-				//Lo agregamos a la colecciónaa
-				coleccion.Aniade(punto);
+			//Creamos un nuevo punto
+			Punto2D punto(abscisa, ordenada);
+			//Lo agregamos a la colecciónaa
+			coleccion.Aniade(punto);
 
-
-			}
-
+			//Pintamos un salto de linea
 			cout << "\n";
 	
 		}
 
-	} while (abscisa != -1);
+	} while (abscisa != -1); //El bucle termina al introducir un -1
 
 
 	//Solicitamos los datos para crear una nueva circunferencia
@@ -182,33 +178,44 @@ int main() {
 	
 	} else {
 	
+		//Pedimos los datos de la circunferencia
 		cout << "\nIntroduccion de circunferencia...\n";
 		
 		cout << "Introduzca el radio de la circunferencia: ";
 		cin >> radio_circunferencia;
 
 		cout << "Introduzca la abscisa del centro de la circunferencia: ";
-		cin >> abscisa;
+		cin >> abscisa; //reutilizamos esta variable
 
 		cout << "Introduzca la ordenada del centro de la circunferencia: ";
-		cin >> ordenada;
+		cin >> ordenada; //reutilizamos esta variable
 
+		//Creamos un nuevo punto2D para el centro de la circunferencia
 		Punto2D punto_circunferencia(abscisa, ordenada);
+
+		//Creamos un nuevo objeto circunferencia con su radio y su punto centro
 		Circunferencia circunferencia(radio_circunferencia, punto_circunferencia);
 
 		//Pintamos los valores en la consola
 		cout << "\nLos puntos que estan dentro de la circunferencia son:\n";
+
+		//Recorremos los puntos introducidos
 		for (int i = 0; i < coleccion.Tamanio(); i++) {
 	
+			//Obtenemos el punto (para hacer mas legible el codigo)
 			Punto2D punto = coleccion.Elemento(i);
 
+			//Si la circunferencia contiene el punto...
 			if (circunferencia.ContienePunto(punto)) {
 		
+				//...lo pintamos
 				cout << "x = " << punto.GetAbscisa() << ", y = " << punto.GetOrdenada() << "\n";
 
 			}
 
 		}
+
+		//Pintamos un salto de línea
 		cout << "\n";
 
 	}
